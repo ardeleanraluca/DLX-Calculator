@@ -1,0 +1,200 @@
+.data
+array: .word 4,5,1,9,11,33
+array2: .word 0,0,0,0,0,0,0,0
+
+.text 
+.global main
+
+main:
+addi r1,r0, array ; Moves the address of arr31y into register r8.
+addi r2, r0, array2
+addi r3, r0,0 ;l
+addi r4, r0,5 ;h
+addi r5, r0, array2 ;copie len pentru stack
+
+quick:
+	nop
+	nop
+	sw 0(r5), r3
+	addi r5,r5,4
+	nop
+	nop
+	nop
+	sw 0(r5), r4
+
+	While:
+		lw r4,0(r5)
+		addi r5,r5,-4
+		nop
+		nop
+		nop
+
+		lw r3, 0(r5)
+		addi r5,r5,-4
+
+		partition:  	;in r10 ce returneaza
+				add r17, r3, r0 ;l
+				
+				slli r8,r4,2
+				nop
+				nop
+				nop
+				add r7,r1,r8
+				nop
+				nop
+				nop
+				lw r9, 0(r7) 	;x
+				addi r10, r17,-1 ;i
+				
+		   for:		slli r8, r17,2
+				nop
+				nop
+				nop
+				add r14, r1, r8
+				nop
+				nop
+				nop
+				lw r11, 0(r14)  ;arr[j]
+				nop
+				nop
+				nop
+				slt r12, r11,r9
+				nop
+				nop
+				nop
+
+				beqz r12, finalFor
+				nop
+				nop
+				addi r10, r10,1
+				nop
+				nop
+				nop
+				slli r8, r10, 2
+				nop
+				nop
+				nop
+				add r15, r1, r8
+				nop
+				nop	
+				nop
+				lw r13, 0(r15) ;arr[i]
+				nop
+				nop	
+				nop
+				add r8, r13,r0
+				add r13, r0, r11
+				nop
+				nop
+				add r11, r0, r8
+				nop
+				nop
+				sw 0(r15), r13
+				sw 0(r14), r11
+				
+
+		   finalFor:  	
+				addi r17, r17, 1
+				nop
+				nop
+				nop
+				sub r16, r17,r4
+				nop
+				nop
+				nop
+				beqz r16, finalPart
+				nop
+				nop
+				j for
+				nop
+				nop
+		   finalPart:
+				addi r10, r10,1
+				nop
+				nop	
+				nop
+				slli r8, r10, 2
+				nop
+				nop	
+				nop
+				add r15, r1, r8
+				nop
+				nop	
+				nop
+				lw r13, 0(r15) ;arr[i+1]
+				nop
+				nop						
+				nop
+
+				add r8, r13,r0
+				add r13, r0, r9
+				nop
+				nop	
+				add r9, r0, r8
+				nop
+				nop	
+				
+				sw 0(r15), r13
+				sw 0(r7), r9
+
+		addi r18, r10, -1  ;p-1
+		nop
+		nop	
+		nop
+		sgt r19, r18, r3
+		nop
+		nop	
+		nop
+		beqz r19, nextIF
+		nop
+		nop	
+		
+		addi r5, r5, 4
+		nop
+		nop	
+		nop
+		sw 0(r5), r3
+		addi r5,r5,4
+		nop
+		nop	
+		nop
+		sw 0(r5), r18
+
+	nextIF: 	
+		addi r18, r10, 1  ;p+1
+		nop
+		nop	
+		nop
+		sgt r19, r4, r18
+		nop
+		nop	
+		nop
+		beqz r19, finalQuick
+		nop
+		nop	
+		
+		addi r5, r5, 4
+		nop
+		nop	
+		nop
+		sw 0(r5), r18
+		addi r5,r5,4
+		nop
+		nop	
+		nop
+		sw 0(r5), r4
+		
+finalQuick:
+	sgt r6, r2,r5
+	nop
+	nop	
+	nop
+	beqz r6, While
+	nop
+	nop	
+	
+				 
+	 
+				
+			
+	
